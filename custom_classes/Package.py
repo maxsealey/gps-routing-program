@@ -18,9 +18,9 @@ class Package:
                                                               self.state, self.state, self.zip,
                                                               self.weight, self.status, self.notes)
 
-# sets truck id when package loaded
-    def set_truck_id(self, id):
-        self.truck_id = id
+def get_address(self):
+    return self.address
+
 
 # updates status upon delivery or delay (hub, out for delivery, delayed, delivered)
     def set_status(self, new_status):
