@@ -18,10 +18,6 @@ class Package:
                                                               self.state, self.state, self.zip,
                                                               self.weight, self.status, self.notes)
 
-def get_address(self):
-    return self.address
-
-
 # updates status upon delivery or delay (hub, out for delivery, delayed, delivered)
     def set_status(self, new_status):
         self.status = new_status

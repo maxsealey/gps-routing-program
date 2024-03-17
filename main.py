@@ -13,14 +13,14 @@ with open('./csv_data/addresses.csv') as addresses:
 with open('./csv_data/distances.csv') as distances:
     distance_reader = list(csv.reader(distances, delimiter=','))
 
+with open('./csv_data/packages.csv') as pkg_data:
+    package_reader = list(csv.reader(pkg_data, delimiter=','))
+
 
 # def greedy_algo():
 
-def load_packages(file, table):
-    with open(file) as pkg_data:
-        packages = list(csv.reader(pkg_data, delimiter=','))
-
-    for p in packages:
+def load_packages(pkgs, table):
+    for p in pkgs:
         id = int(p[0])
         address = p[1]
         city = p[2]
@@ -36,13 +36,13 @@ def load_packages(file, table):
         table.insert(id, pkg)
 
 
+# fill hash table with package data
 hash_table = HashTable.HashTable()
+load_packages(package_reader, hash_table)
 
-load_packages('./csv_data/packages.csv', hash_table)
-
-truck1 = Truck.Truck(1, "4001 S 700 E", datetime.time(8), [])
-truck2 = Truck.Truck(2, "4001 S 700 E", datetime.time(8), [])
-truck3 = Truck.Truck(3, "4001 S 700 E", datetime.time(8), [])
+truck1 = Truck.Truck(1, "4001 S 700 E", datetime.timedelta(hours=8), [])
+truck2 = Truck.Truck(2, "4001 S 700 E", datetime.timedelta(hours=8), [])
+truck3 = Truck.Truck(3, "4001 S 700 E", datetime.timedelta(hours=8), [])
 
 
 # CLI
@@ -56,14 +56,14 @@ def run_program():
     --------------------------------------------------------------
     Welcome to the WGUPS Routing System
     --------------------------------------------------------------
-    If you would like to view the delivery status of all packages,
-    type '1' and hit enter.
+    If you would like to view the delivery status of all packages at a 
+    particular time, type 'all' and hit enter (case-sensitive).
     
     If you would like to get the status of a single package at a 
-    particular time, type '2' and hit enter.
+    particular time, type 'one' and hit enter (case-sensitive).
         
-    If you would like to view the status of our delivery trucks, 
-    type '3' and hit enter. 
+    If you would like to view the status of our delivery trucks
+    and total mileage, type 'miles' and hit enter (case-sensitive). 
     
     Type 'q' and hit enter to quit.
     
@@ -74,24 +74,22 @@ def run_program():
             break
 
         # continues loop if option invalid
-        elif res != '1' and res != '2' and res != '3':
+        elif res != 'all' and res != 'one' and res != 'miles':
             print("Please enter a valid input.")
             continue
 
         # see status of all packages
-        elif int(res) == 1:
+        elif res == 'all':
 
             valid_input = 1
 
         # see status of a single package
-        elif int(res) == 2:
+        elif res == 'one':
             time = input(
                 '''
-    Please enter the time that you would like to see the
-    delivery status of each package in the format, HH:MM:SS
+    Please enter the time at which you would like to check 
+    the package status (format: HH:MM:SS).
     ''')
-            (hour, min, sec) = time.split(':')
-            print(time)
             valid_input = 1
 
         # check truck status and mileage
