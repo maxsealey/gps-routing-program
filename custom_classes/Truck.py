@@ -20,10 +20,13 @@ class Truck:
         self.current_address = new_address
 
     # updates current time
-    def set_curr_time(self, time_increment):
-        self.curr_time += time_increment
+    def set_curr_time(self, new_time):
+        self.curr_time = new_time
 
     # update mileage
     def set_miles(self, new_miles):
         self.miles = new_miles
 
+    # returns array of packages on truck
+    def get_load(self):
+        return self.pkg_load

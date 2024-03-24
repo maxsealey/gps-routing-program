@@ -2,6 +2,7 @@
 
 import csv
 import datetime
+import utility
 
 from custom_classes import Package
 from custom_classes import Truck
@@ -16,7 +17,6 @@ with open('./csv_data/distances.csv') as distances:
 with open('./csv_data/packages.csv') as pkg_data:
     package_reader = list(csv.reader(pkg_data, delimiter=','))
 
-
 # def greedy_algo():
 
 def load_packages(pkgs, table):
@@ -30,8 +30,6 @@ def load_packages(pkgs, table):
         weight = p[6]
         notes = p[7]
 
-        print(id, address, city, state, zip, deadline, weight, notes)
-
         pkg = Package.Package(id, address, city, state, zip, deadline, weight, notes)
         table.insert(id, pkg)
 
@@ -40,9 +38,12 @@ def load_packages(pkgs, table):
 hash_table = HashTable.HashTable()
 load_packages(package_reader, hash_table)
 
-truck1 = Truck.Truck(1, "4001 S 700 E", datetime.timedelta(hours=8), [])
-truck2 = Truck.Truck(2, "4001 S 700 E", datetime.timedelta(hours=8), [])
-truck3 = Truck.Truck(3, "4001 S 700 E", datetime.timedelta(hours=8), [])
+
+truck1 = Truck.Truck(1, "HUB", datetime.timedelta(hours=8), [1, 2, 4, 6, 13, 14, 15, 16, 17, 19, 20, 21, 34, 39, 40])
+truck2 = Truck.Truck(2, "HUB", datetime.timedelta(hours=9, minutes=5), [3, 5, 18, 24, 25, 26, 29, 30, 31, 36, 37, 38])
+truck3 = Truck.Truck(3, "HUB", datetime.timedelta(hours=10, minutes=30), [7, 8, 9, 10, 11, 12, 22, 23, 27, 28, 32, 33, 35])
+
+
 
 
 # CLI
