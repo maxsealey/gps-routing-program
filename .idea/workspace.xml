@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cadde01c-0606-4a11-be86-4bc6fd947ad2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/dist_utility.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom_classes/HashTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_classes/HashTable.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom_classes/Package.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_classes/Package.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom_classes/Truck.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_classes/Truck.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utility.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,5 +115,16 @@
       <updated>1706776090989</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

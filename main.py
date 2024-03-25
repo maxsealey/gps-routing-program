@@ -2,22 +2,21 @@
 
 import csv
 import datetime
-import utility
+import dist_utility
 
 from custom_classes import Package
 from custom_classes import Truck
 from custom_classes import HashTable
 
+with open('./csv_data/packages.csv') as pkg_data:
+    package_list = list(csv.reader(pkg_data, delimiter=','))
+
 with open('./csv_data/addresses.csv') as addresses:
-    address_reader = list(csv.reader(addresses, delimiter=','))
+    address_list = list(csv.reader(addresses, delimiter=','))
 
 with open('./csv_data/distances.csv') as distances:
-    distance_reader = list(csv.reader(distances, delimiter=','))
+    distance_list = list(csv.reader(distances, delimiter=','))
 
-with open('./csv_data/packages.csv') as pkg_data:
-    package_reader = list(csv.reader(pkg_data, delimiter=','))
-
-# def greedy_algo():
 
 def load_packages(pkgs, table):
     for p in pkgs:
@@ -36,15 +35,16 @@ def load_packages(pkgs, table):
 
 # fill hash table with package data
 hash_table = HashTable.HashTable()
-load_packages(package_reader, hash_table)
-
+load_packages(package_list, hash_table)
 
 truck1 = Truck.Truck(1, "HUB", datetime.timedelta(hours=8), [1, 2, 4, 6, 13, 14, 15, 16, 17, 19, 20, 21, 34, 39, 40])
 truck2 = Truck.Truck(2, "HUB", datetime.timedelta(hours=9, minutes=5), [3, 5, 18, 24, 25, 26, 29, 30, 31, 36, 37, 38])
-truck3 = Truck.Truck(3, "HUB", datetime.timedelta(hours=10, minutes=30), [7, 8, 9, 10, 11, 12, 22, 23, 27, 28, 32, 33, 35])
+truck3 = Truck.Truck(3, "HUB", datetime.timedelta(hours=10, minutes=30),
+                     [7, 8, 9, 10, 11, 12, 22, 23, 27, 28, 32, 33, 35])
 
-
-
+t1 = dist_utility.greedy_find_nearest(hash_table, distance_list, address_list, truck1, truck1.current_address)
+t2 = dist_utility.greedy_find_nearest(hash_table, distance_list, address_list, truck2, truck2.current_address)
+t3 = dist_utility.greedy_find_nearest(hash_table, distance_list, address_list, truck3, truck3.current_address)
 
 # CLI
 def run_program():

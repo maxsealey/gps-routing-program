@@ -26,7 +26,3 @@ class Truck:
     # update mileage
     def set_miles(self, new_miles):
         self.miles = new_miles
-
-    # returns array of packages on truck
-    def get_load(self):
-        return self.pkg_load
