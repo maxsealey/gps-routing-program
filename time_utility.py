@@ -19,6 +19,7 @@ def convert_mins_to_hhmmss(mins):
 def determine_pkg_status(hash_table, time_input, pkg_id):
     leave_time = hash_table.look_up(pkg_id).leave_time
     delivered_time = hash_table.look_up(pkg_id).delivered_time
+
     bod = datetime.timedelta(hours=8, minutes=0, seconds=0)
     eod = datetime.timedelta(hours=17, minutes=0, seconds=0)
 
@@ -28,7 +29,7 @@ def determine_pkg_status(hash_table, time_input, pkg_id):
         return "HUB"
     elif leave_time <= time_input < delivered_time:
         return "Out for Delivery"
-    elif delivered_time >= time_input:
+    elif delivered_time <= time_input:
         return "Delivered"
     else:
         return "something went wrong"

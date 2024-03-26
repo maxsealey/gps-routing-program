@@ -13,12 +13,13 @@ class Package:
         self.notes = notes
         self.leave_time = datetime.timedelta(hours=0, minutes=0, seconds=0)
         self.delivered_time = datetime.timedelta(hours=0, minutes=0, seconds=0)
+        self.truck_id = 0
 
     def __str__(self):
-        return "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s" % (self.id, self.address, self.city,
-                                                           self.state, self.zip, self.deadline,
-                                                           self.weight, self.notes, self.leave_time,
-                                                           self.delivered_time)
+        return "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s" % (self.id, self.address, self.city,
+                                                               self.state, self.zip, self.deadline,
+                                                               self.weight, self.notes, self.leave_time,
+                                                               self.delivered_time, self.truck_id)
 
     def update_address(self, new_address, new_city, new_state, new_zip):
         self.address = new_address
@@ -31,3 +32,6 @@ class Package:
 
     def package_delivered(self, time):
         self.delivered_time = time
+
+    def set_truck_id(self, t_id):
+        self.truck_id = t_id

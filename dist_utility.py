@@ -1,5 +1,8 @@
-# Takes in list created by csv reader and address, returns the index associated with
-# said address. All address values are unique.
+"""
+Name: Max Sealey || Student ID: 010332991
+
+Contains the utility functions used to execute distance-related operations, including deliver_packages()
+"""
 import datetime
 import time_utility
 
@@ -10,19 +13,33 @@ Params: list of addresses, address to search for
 Returns: the id of that address
 
 The time complexity of this function is O(n), as it
-searches through the list of address
+searches through the input addresses list .
 """
+
+
 def get_address_index(address_list, address):
+    # Using "HUB" instead of the hub's address makes sense for readability
     if address == "HUB":
         return int(0)
 
+    # loops through list
     for i in address_list:
         if i[2] != address:
             continue
         return int(i[0])
 
 
-# Takes in two lists and two addresses. Compares list values
+"""
+distance_between()
+
+Params: list of distances, list of addresses, address 1, address 2
+Returns: the distance between the two addresses
+
+The time complexity of this function is O(n), since it calls
+get_address_index(). The core functionality is O(1)
+"""
+
+
 def distance_between(distance_list, address_list, x, y):
     x_index = get_address_index(address_list, x)
     y_index = get_address_index(address_list, y)
@@ -36,7 +53,15 @@ def distance_between(distance_list, address_list, x, y):
         return float(second_try)
 
 
-# Greedy Algo: returns queue of pkg ids at next address, next address
+"""
+distance between()
+
+Params: list of distances, list of addresses, address 1, address 2
+Returns: the distance between the two addresses
+
+The time complexity of this function is O(n), since it calls
+get_address_index(). The core functionality is O(1)
+"""
 def find_next_nearest(table, distance_list, address_list, truck, start_address):
     shortest_dist = 1000.0
     next_pkgs = []
@@ -84,6 +109,7 @@ def deliver_packages(hash_table, distance_list, address_list, truck):
 
     for p in truck.pkg_load:
         hash_table.look_up(p).package_ofd(truck.leave_time)
+        hash_table.look_up(p).set_truck_id(truck.truck_id)
 
     while len(truck.pkg_load) != 0:
         new_location = find_next_nearest(hash_table, distance_list, address_list, truck, truck.current_address)
@@ -98,6 +124,3 @@ def deliver_packages(hash_table, distance_list, address_list, truck):
     total_miles += distance_between(distance_list, address_list, truck.current_address, "HUB")
     truck.current_address = "HUB"
     truck.set_miles(total_miles)
-    t = time_utility.convert_dist_to_mins(total_miles)
-    t1 = time_utility.convert_mins_to_hhmmss(t)
-    print(truck.leave_time + t1)

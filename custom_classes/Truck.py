@@ -13,7 +13,7 @@ class Truck:
 
     def __str__(self):
         return "%s, %s, %s, %s" % (self.truck_id, self.current_address,
-                                           self.leave_time, self.miles)
+                                   self.leave_time, self.miles)
 
     # sets new address upon arrival
     def set_address(self, new_address):
@@ -22,4 +22,3 @@ class Truck:
     # update mileage
     def set_miles(self, new_miles):
         self.miles = new_miles
-
