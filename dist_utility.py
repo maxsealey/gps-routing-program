@@ -1,5 +1,17 @@
 # Takes in list created by csv reader and address, returns the index associated with
 # said address. All address values are unique.
+import datetime
+import time_utility
+
+"""
+get_address_index()
+
+Params: list of addresses, address to search for
+Returns: the id of that address
+
+The time complexity of this function is O(n), as it
+searches through the list of address
+"""
 def get_address_index(address_list, address):
     if address == "HUB":
         return int(0)
@@ -9,10 +21,6 @@ def get_address_index(address_list, address):
             continue
         return int(i[0])
 
-
-# Takes in number of miles and divides by the rate of speed. Returns float representing # of minutes
-def convert_dist_to_mins(miles):
-    return float((miles / 18) * 60)
 
 # Takes in two lists and two addresses. Compares list values
 def distance_between(distance_list, address_list, x, y):
@@ -71,21 +79,25 @@ def find_next_nearest(table, distance_list, address_list, truck, start_address):
 
 def deliver_packages(hash_table, distance_list, address_list, truck):
     total_miles = 0
+    if 9 in truck.pkg_load and truck.leave_time >= datetime.timedelta(hours=10, minutes=20):
+        hash_table.look_up(9).update_address("410 S State St", "Salt Lake City", "UT", "84111")
 
     for p in truck.pkg_load:
-        hash_table.look_up(p).update_package_status("Out for delivery")
+        hash_table.look_up(p).package_ofd(truck.leave_time)
 
     while len(truck.pkg_load) != 0:
         new_location = find_next_nearest(hash_table, distance_list, address_list, truck, truck.current_address)
         total_miles += new_location[2]
         for i in new_location[0]:
+            minutes = time_utility.convert_dist_to_mins(total_miles)
+            hms = truck.leave_time + time_utility.convert_mins_to_hhmmss(minutes)
             truck.pkg_load.remove(i)
-            hash_table.look_up(i).update_package_status("Delivered", convert_dist_to_mins(total_miles))
-        # print(truck.pkg_load)
+            hash_table.look_up(i).package_delivered(hms)
         truck.set_address(new_location[1])
 
-    total_miles += distance_between(distance_list,address_list,truck.current_address,"HUB")
+    total_miles += distance_between(distance_list, address_list, truck.current_address, "HUB")
     truck.current_address = "HUB"
     truck.set_miles(total_miles)
-
-
+    t = time_utility.convert_dist_to_mins(total_miles)
+    t1 = time_utility.convert_mins_to_hhmmss(t)
+    print(truck.leave_time + t1)

@@ -3,6 +3,7 @@
 import csv
 import datetime
 import dist_utility
+import time_utility
 
 from custom_classes import Package
 from custom_classes import Truck
@@ -48,39 +49,16 @@ hash_table = HashTable.HashTable()
 load_packages(package_list, hash_table)
 
 truck1 = Truck.Truck(1, "HUB", datetime.timedelta(hours=8),
-                     [1, 2, 4, 6, 13, 14, 15, 16, 17, 19, 20, 21, 34, 39, 40])
+                     [1, 13, 14, 15, 16, 17, 19, 20, 21, 29, 30, 34, 37, 39, 40])
 truck2 = Truck.Truck(2, "HUB", datetime.timedelta(hours=9, minutes=5),
-                     [3, 5, 18, 24, 25, 26, 29, 30, 31, 36, 37, 38])
+                     [3, 4, 5, 6, 18, 24, 25, 26, 31, 36, 38])
 truck3 = Truck.Truck(3, "HUB", datetime.timedelta(hours=10, minutes=30),
-                     [7, 8, 9, 10, 11, 12, 22, 23, 27, 28, 32, 33, 35])
-
-# t1 = dist_utility.find_next_nearest(hash_table, distance_list, address_list, truck1, truck1.current_address)
-# t2 = dist_utility.find_next_nearest(hash_table, distance_list, address_list, truck2, truck2.current_address)
-# t3 = dist_utility.find_next_nearest(hash_table, distance_list, address_list, truck3, truck3.current_address)
-
-# print(t2[0])
-# print(t2[1])
-# print(t2[2])
+                     [2, 7, 8, 9, 10, 11, 12, 22, 23, 27, 28, 32, 33, 35])
 
 dist_utility.deliver_packages(hash_table, distance_list, address_list, truck1)
-# dist_utility.deliver_packages(hash_table, distance_list, address_list, truck2)
-# dist_utility.deliver_packages(hash_table, distance_list, address_list, truck3)
+dist_utility.deliver_packages(hash_table, distance_list, address_list, truck2)
+dist_utility.deliver_packages(hash_table, distance_list, address_list, truck3)
 
-print(truck1.current_address)
-print(truck1.pkg_load)
-print(truck1.miles)
-"""
-print(truck2.current_address)
-print(truck2.pkg_load)
-print(truck2.miles)
-
-print(truck3.current_address)
-print(truck3.pkg_load)
-print(truck3.miles)
-"""
-
-for i in range(40):
-    print(hash_table.look_up(i+1).delivered_time)
 # CLI
 def run_program():
     # if user doesn't enter a valid option, loops back
@@ -92,8 +70,8 @@ def run_program():
     --------------------------------------------------------------
     Welcome to the WGUPS Routing System
     --------------------------------------------------------------
-    If you would like to view the delivery status of all packages at a 
-    particular time, type 'all' and hit enter (case-sensitive).
+    If you would like to view the delivery times of all packages, 
+    type 'all' and hit enter (case-sensitive).
     
     If you would like to get the status of a single package at a 
     particular time, type 'one' and hit enter (case-sensitive).
@@ -116,17 +94,35 @@ def run_program():
 
         # see status of all packages
         elif res == 'all':
+            try:
+                for i in range(len(hash_table.table)+1):
+                    print("Package ID: {} Deadline: {} Delivered at: {}").format(hash_table.look_up(i).id, hash_table.look_up(i).deadline, hash_table.look_up(i).delivered_time)
 
-            valid_input = 1
+                again = input("Would you like to return to the main menu? (y/n)")
+
+                valid_input = 1
+
+            except:
+                print("Please enter a valid input.")
+                continue
 
         # see status of a single package
         elif res == 'one':
-            time = input(
-                '''
+            try:
+                time = input(
+                    '''
     Please enter the time at which you would like to check 
     the package status (format: HH:MM:SS).
     ''')
-            valid_input = 1
+                pkg_id = int(input(
+                    '''
+    Please enter the id number of the package as an integer 1-40.
+    '''))
+                valid_input = 1
+
+            except:
+                print("Please enter a valid input.")
+                continue
 
         # check truck status and mileage
         else:

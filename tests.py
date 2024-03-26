@@ -70,6 +70,5 @@ for i in range(40):
         print(i + 1)
         print("\n")
 """
-
-test_mins = 90
-hms = ""
+res = datetime.timedelta(hours=8) + datetime.timedelta(hours=2, minutes=30)
+print(res)
