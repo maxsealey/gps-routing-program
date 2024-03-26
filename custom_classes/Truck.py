@@ -4,8 +4,9 @@ class Truck:
         self.current_address = current_address
         self.leave_time = leave_time
         self.curr_time = leave_time
-        self.miles = 0
         self.pkg_load = pkg_load
+
+        self.miles = 0
 
         # constants
         self.max_capacity = 16
@@ -26,3 +27,4 @@ class Truck:
     # update mileage
     def set_miles(self, new_miles):
         self.miles = new_miles
+

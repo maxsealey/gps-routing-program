@@ -47,17 +47,40 @@ def load_packages(pkgs, table):
 hash_table = HashTable.HashTable()
 load_packages(package_list, hash_table)
 
-truck1 = Truck.Truck(1, "HUB", datetime.timedelta(hours=8), [1, 2, 4, 6, 13, 14, 15, 16, 17, 19, 20, 21, 34, 39, 40])
-truck2 = Truck.Truck(2, "HUB", datetime.timedelta(hours=9, minutes=5), [3, 5, 18, 24, 25, 26, 29, 30, 31, 36, 37, 38])
-truck3 = Truck.Truck(3, "HUB", datetime.timedelta(hours=10, minutes=30), [7, 8, 9, 10, 11, 12, 22, 23, 27, 28, 32, 33, 35])
+truck1 = Truck.Truck(1, "HUB", datetime.timedelta(hours=8),
+                     [1, 2, 4, 6, 13, 14, 15, 16, 17, 19, 20, 21, 34, 39, 40])
+truck2 = Truck.Truck(2, "HUB", datetime.timedelta(hours=9, minutes=5),
+                     [3, 5, 18, 24, 25, 26, 29, 30, 31, 36, 37, 38])
+truck3 = Truck.Truck(3, "HUB", datetime.timedelta(hours=10, minutes=30),
+                     [7, 8, 9, 10, 11, 12, 22, 23, 27, 28, 32, 33, 35])
 
-t1 = dist_utility.greedy_find_nearest(hash_table, distance_list, address_list, truck1, truck1.current_address)
-t2 = dist_utility.greedy_find_nearest(hash_table, distance_list, address_list, truck2, truck2.current_address)
-t3 = dist_utility.greedy_find_nearest(hash_table, distance_list, address_list, truck3, truck3.current_address)
+# t1 = dist_utility.find_next_nearest(hash_table, distance_list, address_list, truck1, truck1.current_address)
+# t2 = dist_utility.find_next_nearest(hash_table, distance_list, address_list, truck2, truck2.current_address)
+# t3 = dist_utility.find_next_nearest(hash_table, distance_list, address_list, truck3, truck3.current_address)
 
-print(t2[0])
-print(t2[1])
-print(t2[2])
+# print(t2[0])
+# print(t2[1])
+# print(t2[2])
+
+dist_utility.deliver_packages(hash_table, distance_list, address_list, truck1)
+# dist_utility.deliver_packages(hash_table, distance_list, address_list, truck2)
+# dist_utility.deliver_packages(hash_table, distance_list, address_list, truck3)
+
+print(truck1.current_address)
+print(truck1.pkg_load)
+print(truck1.miles)
+"""
+print(truck2.current_address)
+print(truck2.pkg_load)
+print(truck2.miles)
+
+print(truck3.current_address)
+print(truck3.pkg_load)
+print(truck3.miles)
+"""
+
+for i in range(40):
+    print(hash_table.look_up(i+1).delivered_time)
 # CLI
 def run_program():
     # if user doesn't enter a valid option, loops back

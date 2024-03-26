@@ -14,7 +14,6 @@ def get_address_index(address_list, address):
 def convert_dist_to_mins(miles):
     return float((miles / 18) * 60)
 
-
 # Takes in two lists and two addresses. Compares list values
 def distance_between(distance_list, address_list, x, y):
     x_index = get_address_index(address_list, x)
@@ -30,7 +29,7 @@ def distance_between(distance_list, address_list, x, y):
 
 
 # Greedy Algo: returns queue of pkg ids at next address, next address
-def greedy_find_nearest(table, distance_list, address_list, truck, start_address):
+def find_next_nearest(table, distance_list, address_list, truck, start_address):
     shortest_dist = 1000.0
     next_pkgs = []
     temp = truck.pkg_load.copy()
@@ -68,3 +67,25 @@ def greedy_find_nearest(table, distance_list, address_list, truck, start_address
             temp.remove(pkg)
 
     return [next_pkgs, shortest_dist_address, shortest_dist]
+
+
+def deliver_packages(hash_table, distance_list, address_list, truck):
+    total_miles = 0
+
+    for p in truck.pkg_load:
+        hash_table.look_up(p).update_package_status("Out for delivery")
+
+    while len(truck.pkg_load) != 0:
+        new_location = find_next_nearest(hash_table, distance_list, address_list, truck, truck.current_address)
+        total_miles += new_location[2]
+        for i in new_location[0]:
+            truck.pkg_load.remove(i)
+            hash_table.look_up(i).update_package_status("Delivered", convert_dist_to_mins(total_miles))
+        # print(truck.pkg_load)
+        truck.set_address(new_location[1])
+
+    total_miles += distance_between(distance_list,address_list,truck.current_address,"HUB")
+    truck.current_address = "HUB"
+    truck.set_miles(total_miles)
+
+

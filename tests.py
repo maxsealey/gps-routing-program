@@ -15,7 +15,7 @@ with open('./csv_data/addresses.csv') as addresses:
 with open('./csv_data/distances.csv') as distances:
     distance_list = list(csv.reader(distances, delimiter=','))
 
-
+"""
 def load_packages(pkgs, table):
     for p in pkgs:
         id = int(p[0])
@@ -69,3 +69,7 @@ for i in range(40):
         print("error")
         print(i + 1)
         print("\n")
+"""
+
+test_mins = 90
+hms = ""
