@@ -1,6 +1,16 @@
+"""
+Chaining Hash Table - Self Adjusting Data Structure
+
+Used to store all the packages to be delivered in a custom hash table.
+Followed along with, but did not copy/paste from:
+
+Tepe, Cemal (2020, Nov). Let's Go Hashing Webinar. Panopto.
+Retrieved Mar 20th, 2024, from https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f08d7871-d57a-496e-a6a1-ac7601308c71
+
+"""
 class HashTable:
     def __init__(self, init_capacity=15):
-        # initialize hashmap with empty values
+        # initialize hash table with empty values
         self.table = []
         for i in range(init_capacity):
             self.table.append([])
@@ -10,12 +20,13 @@ class HashTable:
         # get hash and append new item in hashed location
         container = hash(key) % len(self.table)
         container_list = self.table[container]
-        
-        for key_val in container_list:
 
+        # if item already exists, overwrite/update new item
+        for key_val in container_list:
             if key_val[0] == key:
                 key_val[1] = i
                 return True
+        # add item to list in hashed container
         container_list.append([key, i])
         return True
 
@@ -37,6 +48,7 @@ class HashTable:
         container = hash(key) % len(self.table)
         container_list = self.table[container]
 
+        # remove item if found
         for key_val in container_list:
             if key_val[0] == key:
                 container_list.remove([key_val[0], key_val[1]])

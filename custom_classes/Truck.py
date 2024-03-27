@@ -1,3 +1,11 @@
+"""
+Custom Truck Class
+
+Keeps track of the truck's id, current address, departure time, package
+load, (a list of associated package id numbers), and miles
+"""
+
+
 class Truck:
     def __init__(self, truck_id, current_address, leave_time, pkg_load):
         self.truck_id = truck_id
@@ -15,10 +23,10 @@ class Truck:
         return "%s, %s, %s, %s" % (self.truck_id, self.current_address,
                                    self.leave_time, self.miles)
 
-    # sets new address upon arrival
+    # Sets new current address, invoked upon arrival
     def set_address(self, new_address):
         self.current_address = new_address
 
-    # update mileage
+    # Updates truck mileage
     def set_miles(self, new_miles):
         self.miles = new_miles

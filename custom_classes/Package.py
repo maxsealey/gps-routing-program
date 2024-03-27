@@ -1,3 +1,9 @@
+"""
+Custom Package Class
+
+Contains the package's id, delivery address, delivery deadline, weight, notes, time of
+departure, time of delivery, and the truck id
+"""
 import datetime
 
 
@@ -21,17 +27,21 @@ class Package:
                                                                self.weight, self.notes, self.leave_time,
                                                                self.delivered_time, self.truck_id)
 
+    # Updates package's address when invoked
     def update_address(self, new_address, new_city, new_state, new_zip):
         self.address = new_address
         self.city = new_city
         self.state = new_state
         self.zip = new_zip
 
+    # Sets the time package leaves the hub
     def package_ofd(self, time):
         self.leave_time = time
 
+    # Invoked to update time when delivered
     def package_delivered(self, time):
         self.delivered_time = time
 
+    # Called when truck containing package is sent out for delivery
     def set_truck_id(self, t_id):
         self.truck_id = t_id
