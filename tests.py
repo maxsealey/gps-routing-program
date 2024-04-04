@@ -164,9 +164,9 @@ def run_program():
 
                 # Loop through and print data for each
                 for i in range(len(package_list)):
-                    print(f"Status of package {i + 1}: {time_utility.determine_pkg_status(hash_table, time, i + 1)} || "
-                          f"Delivery time: {hash_table.look_up(i + 1).delivered_time}")
-
+                    p = hash_table.look_up(i + 1)
+                    status = time_utility.determine_pkg_status(hash_table, time, i + 1)
+                    print(f"Package ID: {p.id} | Status: {status} | " + time_utility.get_status_time(status, time, hash_table.look_up(i + 1).delivered_time))
                 # Back to main menu or quit
                 if input("Press any key and 'enter' to continue or 'q' to quit: ") == 'q':
                     exit()
@@ -188,9 +188,9 @@ def run_program():
     ''')
                 (h, m, s) = time.split(":")
                 time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
-
-                print(f"Status of package {pkg_id}: {time_utility.determine_pkg_status(hash_table, time, pkg_id)}\n"
-                      f"Delivery time: {hash_table.look_up(pkg_id).delivered_time}")
+                status = time_utility.determine_pkg_status(hash_table, time, pkg_id)
+                print(f"Status of package {pkg_id}: {status}")
+                print(time_utility.get_status_time(status, time, hash_table.look_up(pkg_id).delivered_time))
 
                 # Back to main menu or quit
                 if input("Press any key and 'enter' to continue or 'q' to quit: ") == 'q':

@@ -22,6 +22,8 @@ Loops through the list of packages, assigns each attribute to a temporary
 variable, creates a new Package object using that data, and inserts into the
 hash table
 
+Called in main.py run_program()
+
 Time Complexity: O(n)
 """
 
@@ -64,10 +66,11 @@ Core algorithm called to execute the program. Opens the csv files, creates the h
 loads the hash table with package data, creates and loads the truck, calls the function to deliver 
 the packages, runs the CLI
 
-Note to self: could be further modularized and aspects of the loading and
-sorting process should be more automated
+Calls:
+    - load_packages()
+    - time_utility.determine_pkg_status()
+    - time_utility.get_status_time()
 
-Time Complexity: Due to the 
 """
 
 
@@ -138,7 +141,7 @@ def run_program():
             try:
                 for i in range(len(package_list)):
                     p = hash_table.look_up(i + 1)
-
+                    status = time_utility.determine_pkg_status(hash_table, time, i + 1)
                     print(f"Package ID: {p.id}\n"
                           f"Truck ID: {p.truck_id}\n"
                           f"Deadline: {p.deadline}\n"
@@ -158,21 +161,23 @@ def run_program():
                 time = input(
                     '''
     Please enter the time at which you would like to check 
-    the package status (format: HH:MM:SS).
+    the package status (format: HH:MM:SS). Time be within the
+    bounds of the workday (8:00:00 - 17:00:00).
     ''')
                 (h, m, s) = time.split(":")
                 time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
 
-        # Loop through and print data for each
+                # Loop through and print data for each
                 for i in range(len(package_list)):
                     p = hash_table.look_up(i + 1)
+                    status = time_utility.determine_pkg_status(hash_table, time, i + 1)
+                    print(f"Package ID: {p.id} || "
+                          f"Address: {p.address}, {p.city}, {p.state} {p.zip} || "
+                          f"Truck ID: {p.truck_id} || "
+                          f"Status: {status}")
+                    print(time_utility.get_status_time(status, time, hash_table.look_up(i + 1).delivered_time))
 
-                    print(f"Package ID: {p.id}\n"
-                          f"Address: {p.address}, {p.city}, {p.state} {p.zip}\n"
-                          f"Current Time: {time}\n"
-                          f"Status: {time_utility.determine_pkg_status(hash_table, time, i + 1)}\n")
-
-        # Back to main menu or quit
+                # Back to main menu or quit
                 if input("Press any key and 'enter' to continue or 'q' to quit: ") == 'q':
                     exit()
             except ValueError:
@@ -189,15 +194,18 @@ def run_program():
                 time = input(
                     '''
     Please enter the time at which you would like to check 
-    the package status (format: HH:MM:SS).
+    the package status (format: HH:MM:SS). Time be within the
+    bounds of the workday (8:00:00 - 17:00:00).
     ''')
                 (h, m, s) = time.split(":")
                 time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
+                status = time_utility.determine_pkg_status(hash_table, time, pkg_id)
+                print(f"Status of Package {pkg_id}: {status}\n"
+                      f"Truck ID: {hash_table.look_up(pkg_id).truck_id}\n"
+                      f"Address: {hash_table.look_up(pkg_id).address}, {hash_table.look_up(pkg_id).city}, {hash_table.look_up(pkg_id).state} {hash_table.look_up(pkg_id).zip}")
+                print(time_utility.get_status_time(status, time, hash_table.look_up(pkg_id).delivered_time))
 
-                print(f"Status of package {pkg_id}: {time_utility.determine_pkg_status(hash_table, time, pkg_id)}\n"
-                      f"Delivery time: {hash_table.look_up(pkg_id).delivered_time}")
-
-                # Back to main menu or quit
+            # Back to main menu or quit
                 if input("Press any key and 'enter' to continue or 'q' to quit: ") == 'q':
                     exit()
             except ValueError:

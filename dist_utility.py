@@ -10,9 +10,9 @@ get_address_index()
 Params: list of addresses, address to search for
 Returns: the id of that address
 
-The time complexity of this function is O(n) as it
-searches through the input addresses list, where n is the number
-of addresses.
+Simple linear search. Called in distance_between()
+
+Time Complexity: O(n)
 """
 
 
@@ -34,8 +34,13 @@ distance_between()
 Params: list of distances, list of addresses, address 1, address 2
 Returns: the distance between the two addresses
 
-The time complexity of this function is O(n), since it calls
-get_address_index()
+Accesses the element of the array containing the distance between two
+addresses.
+
+Calls: get_address_index()
+Called by: find_next_nearest()
+
+Time Complexity: O(n)
 """
 
 
@@ -61,7 +66,10 @@ Params: hash table of packages, list of distances, list of addresses,
 truck object, address of starting point.
 Returns: A list with three elements: [0] a list of the packages on
 the truck to be delivered at the next nearest address, [1] the address of
-the nearest/next neighbor, [2] the distance
+the nearest/next neighbor, [2] the distance away
+
+Calls: distance_between()
+Called by: deliver_packages()
 
 Time Complexity: O(n^2)
 
@@ -107,7 +115,10 @@ Updates package if address is wrong. Updates package info with departure time an
 While truck still has packages to be delivered, gets nearest location, increments, and removes
 the package at that location.
 
-Time Complexity: O(n^3)
+Calls: find_next_nearest(), time_utility.convert_miles_to_timedelta()
+Called by: main.run_program()
+
+Time Complexity: O(n^2)
 """
 
 
