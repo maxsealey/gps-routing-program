@@ -41,16 +41,6 @@ def load_packages(pkgs, table):
         weight = p[6]
         notes = p[7]
 
-        # bandaid patch to fix formatting inconsistencies
-        if address == "600 E 900 South":
-            address = "600 E 900 S"
-        elif address == "6351 South 900 East":
-            address = "6351 S 900 E"
-        elif address == "5100 South 2700 West":
-            address = "5100 S 2700 W"
-        elif address == "5383 South 900 East #104":
-            address = "5383 S 900 E #104"
-
         # Create new Package object and insert into the custom hash table
         pkg = Package.Package(id, address, city, state, zip, deadline, weight, notes)
         table.insert(id, pkg)
